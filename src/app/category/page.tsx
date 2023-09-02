@@ -24,19 +24,17 @@ export default function Products(): JSX.Element {
   useEffect(() => {
     const fetchData = async () => {
       try {
-<<<<<<< HEAD
-        const response2 = await fetch("http://157.230.2.35/api/catalogs");
-        const data2 = await response2.json();
-        setCatalog(data2);
-        const response4 = await fetch( "http://157.230.2.35/api/subcategories");
-        const data4 = await response4.json();
-        setSubcategori(data4);
 
-=======
         const response2 = await fetch("http://10.10.1.25:3001/api/category");
         const data2 = await response2.json();
         setCategory(data2.data);
->>>>>>> d093366eb1042c70caee2193d8f9e5c913cb1733
+
+      
+        // const response4 = await fetch( "http://157.230.2.35/api/subcategories");
+        // const data4 = await response4.json();
+        // setSubcategory(data4);
+
+
       } catch (error) {
         console.error(error);
       }
@@ -68,11 +66,10 @@ export default function Products(): JSX.Element {
       };
 
       try {
-<<<<<<< HEAD
-        fetch("http://157.230.2.35/api/categories", {
-=======
+
         fetch("http://10.10.1.25:3001/api/category", {
->>>>>>> d093366eb1042c70caee2193d8f9e5c913cb1733
+
+      
           method: "POST",
           headers: {
             "Content-Type": "application/json",

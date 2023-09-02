@@ -13,19 +13,18 @@ export default function Products(): JSX.Element {
   const catalogId = useRef<any>(null);
   const title1 = useRef<any>(null);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response2 = await fetch("http://localhost:1212/api/catalogs");
-  //       const data2 = await response2.json();
-  //       setCatalog(data2);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
 
-  //   fetchData();
-  // }, []);
+  const fetchCatalogs = async () => {
+    try {
+      const response = await fetch("http://10.10.1.25:3001/api/catalog");
+      const data = await response.json();
+      setCatalog(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  fetchCatalogs();
+
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -37,7 +36,9 @@ export default function Products(): JSX.Element {
         catalog_name: title.current.value,
       };
       try {
-        fetch("http://localhost:1212/api/catalogs", {
+
+        const response = await fetch("http://10.10.1.25:3001/api/catalog", {
+
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -385,7 +385,7 @@ export default function Products(): JSX.Element {
                 <label className="block fount">Categori</label>
                 <select
                   ref={categoriesId}
-                  className="hidden_pleceholder w-80 p-3 rounded-lg focus:outline-none focus:ring"
+                  className="hidden_pleceh 3 rounded-lg focus:outline-none focus:ring"
                 >
                   <option value="" disabled hidden>
                    
