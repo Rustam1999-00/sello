@@ -28,12 +28,21 @@ export default function Products(): JSX.Element {
         const response2 = await fetch("http://10.10.1.25:3001/api/category");
         const data2 = await response2.json();
         setCategory(data2.data);
+<<<<<<< HEAD
 
       
         // const response4 = await fetch( "http://157.230.2.35/api/subcategories");
         // const data4 = await response4.json();
         // setSubcategory(data4);
 
+=======
+
+      
+        const response4 = await fetch( "http://157.230.2.35/api/subcategories");
+        const data4 = await response4.json();
+        setSubcategori(data4);
+
+>>>>>>> b661d32f0d88c104abb2df53a50f42509205663f
 
       } catch (error) {
         console.error(error);

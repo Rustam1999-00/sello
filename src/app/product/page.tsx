@@ -89,11 +89,20 @@ export default function Products(): JSX.Element {
     };
     myfuns();
   }, []);
+<<<<<<< HEAD
+=======
+
+>>>>>>> b661d32f0d88c104abb2df53a50f42509205663f
 
   //Post
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> b661d32f0d88c104abb2df53a50f42509205663f
     const hendlepic = async () => {
       const formData = new FormData();
       formData.append("file", files.current?.files[0]);
@@ -147,6 +156,7 @@ export default function Products(): JSX.Element {
     };
 
     hendlepic();
+
   };
 
   //Delete
