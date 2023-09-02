@@ -137,7 +137,8 @@ export default function Products(): JSX.Element {
             const response5 = await fetch("http://157.230.2.35/api/product");
             const data5 = await response5.json();
             setProduct(data5);
-            alert("Success")
+            alert(data.message)
+
 
           });
       } catch (error) {
@@ -165,7 +166,8 @@ export default function Products(): JSX.Element {
           const response5 = await fetch("http://157.230.2.35/api/product");
           const data5 = await response5.json();
           setProduct(data5);
-          alert("Success")
+         alert(data.message)
+
 
         }
       });
@@ -231,7 +233,8 @@ export default function Products(): JSX.Element {
               console.log(data.errors);
             } else {
               console.log(data);
-              alert("Success")
+              alert(data.message)
+
             }
             const response5 = await fetch("http://157.230.2.35/api/product");
             const data5 = await response5.json();
@@ -582,7 +585,7 @@ export default function Products(): JSX.Element {
                   className="hidden_pleceholder w-64 p-3 rounded-lg focus:outline-none focus:ring"
                 >
                   <option value="" disabled hidden>
-                    Ona-tili
+                 
                   </option>
                   {catalog.map((el: any) => (
                     <option value={el.id}>{el.catalog_name}</option>
@@ -596,7 +599,7 @@ export default function Products(): JSX.Element {
                   className="hidden_pleceholder w-64 p-3 rounded-lg focus:outline-none focus:ring"
                 >
                   <option value="" disabled hidden>
-                    Ona-tili
+                 
                   </option>
                   {categori.map((el: any) => (
                     <option value={el.id}>{el.category_name}</option>
