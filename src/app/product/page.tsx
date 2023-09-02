@@ -90,9 +90,12 @@ export default function Products(): JSX.Element {
     myfuns();
   }, []);
 
+
   //Post
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+
 
     const hendlepic = async () => {
       const formData = new FormData();
@@ -147,6 +150,7 @@ export default function Products(): JSX.Element {
     };
 
     hendlepic();
+
   };
 
   //Delete
