@@ -44,15 +44,19 @@ export default function Products(): JSX.Element {
     const fetchData = async () => {
       try {
    
+
         const response1 = await fetch("http://157.230.2.35/api/category");
         const data1 = await response1.json();
         setCategori(data1.data);
         const response2 = await fetch("http://157.230.2.35/api/catalog");
+
         const data2 = await response2.json();
         setCatalog(data2.data);
  
 
+
         const response4 = await fetch( "http://157.230.2.35/api/subcategory");
+
         const data4 = await response4.json();
         setSubcategori(data4.data);
         const response5 = await fetch("http://157.230.2.35/api/brand");
