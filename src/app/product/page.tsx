@@ -69,7 +69,6 @@ export default function Products(): JSX.Element {
   }, []);
   useEffect(() => {
     const myfuns = async () => {
-      
       const response5 = await fetch("http://157.230.2.35/api/product");
       const data5 = await response5.json();
       setProduct(data5);
@@ -78,14 +77,12 @@ export default function Products(): JSX.Element {
   }, []);
   // useEffect(() => {
   //   const myfuns = async () => {
-      
-    
+
   //   };
   //   myfuns();
   // }, []);
 
   console.log(brend);
-  
 
   //Post
   const handleSubmit = async (e: any) => {
@@ -93,57 +90,57 @@ export default function Products(): JSX.Element {
 
     console.log(files.current.files[0]);
     console.log(title.current);
-    
+
     console.log("salom");
 
-//     const hendlepic = async () => {
-//       const formData = new FormData();
-//       formData.append("file", files.current?.files[0]);
-//       try {
-//         const response = await axios.post(
-//           "http://157.230.2.35/api/file",
-//           formData
-//         );
-//         const data = response.data;
-// console.log(data.error);
+    //     const hendlepic = async () => {
+    //       const formData = new FormData();
+    //       formData.append("file", files.current?.files[0]);
+    //       try {
+    //         const response = await axios.post(
+    //           "http://157.230.2.35/api/file",
+    //           formData
+    //         );
+    //         const data = response.data;
+    // console.log(data.error);
 
-//         // const productInfos = productInfo.current.value;
-//         const datas = {
-//           product_image: data,
-//           title: title.current.value,
-//           product_count: +amount.current.value,
-//           price: +price.current.value,
-//           product_info:productInfo.current.value,
-//           brand_id: +brendId.current.value,
-//           catalog_id: +catalogId.current.value,
-//           category_id: +categoriesId.current.value,
-//           description: description.current.value,
-//           subcategory_id: +subcategoryId.current.value,
-//         };
+    //         // const productInfos = productInfo.current.value;
+    //         const datas = {
+    //           product_image: data,
+    //           title: title.current.value,
+    //           product_count: +amount.current.value,
+    //           price: +price.current.value,
+    //           product_info:productInfo.current.value,
+    //           brand_id: +brendId.current.value,
+    //           catalog_id: +catalogId.current.value,
+    //           category_id: +categoriesId.current.value,
+    //           description: description.current.value,
+    //           subcategory_id: +subcategoryId.current.value,
+    //         };
 
-//         console.log(datas);
+    //         console.log(datas);
 
-//         fetch("http://157.230.2.35/api/product", {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           body: JSON.stringify(datas),
-//         })
-//           .then((res) => res.json())
-//           .then((data) => {
-//             if (data.errors) {
-//               console.log(data.errors);
-//             } else {
-//               console.log(data);
-//             }
+    //         fetch("http://157.230.2.35/api/product", {
+    //           method: "POST",
+    //           headers: {
+    //             "Content-Type": "application/json",
+    //           },
+    //           body: JSON.stringify(datas),
+    //         })
+    //           .then((res) => res.json())
+    //           .then((data) => {
+    //             if (data.errors) {
+    //               console.log(data.errors);
+    //             } else {
+    //               console.log(data);
+    //             }
 
-//             setProduct(data);
-//           });
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
+    //             setProduct(data);
+    //           });
+    //       } catch (error) {
+    //         console.error(error);
+    //       }
+    //     };
 
     // hendlepic();
   };
