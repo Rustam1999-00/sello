@@ -4,23 +4,46 @@ import { useEffect, useState, useRef } from "react";
 import search from "../../../public/images/search.svg";
 import "../product/product.css";
 import axios from "axios";
-
+import { MdDeleteSweep } from "react-icons/md";
+import { BiSolidEditAlt } from "react-icons/bi";
 interface RefType {
   current: HTMLDivElement | null;
 }
 
-export default function Products(): JSX.Element {
-  const [catalog, setCatalog] = useState([]);
+export default function Product(): JSX.Element {
+  const [modal, setModal] = useState("hidden");
 
-  const catalogId = useRef<any>(null);
-  const title = useRef<any>(null);
+  const [product, setProduct] = useState([]);
+  const [catalog, setCatalog] = useState([]);
+  const [id, setId] = useState(null);
+  const [discountProduct, setDiscountProduct] = useState([]);
+  const [subcategori, setSubcategori] = useState([]);
+
+  const productId = useRef<any>(null);
+  const percent = useRef<any>(null);
+
+  const end_time = useRef<any>(null);
+
+  const productIdEdit = useRef<any>(null);
+  const percentEdit = useRef<any>(null);
+
+  const end_timeEdit = useRef<any>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response2 = await fetch("http://localhost:1212/api/catalogs");
+        const response2 = await fetch("http://157.230.2.35/api/category");
         const data2 = await response2.json();
-        setCatalog(data2);
+        setProduct(data2?.data);
+        const responseDiscount = await fetch("http://157.230.2.35/api/subcategory");
+        const data3 = await responseDiscount.json();
+        setDiscountProduct(data3?.data )
+// catalog 
+        const responseCatalog= await fetch("http://157.230.2.35/api/catalog");
+        const data4 = await responseCatalog.json();
+        setCatalog(data4?.data )
+       console.log(data4?.data  ,"setCatalog");
+       
       } catch (error) {
         console.error(error);
       }
@@ -28,19 +51,26 @@ export default function Products(): JSX.Element {
 
     fetchData();
   }, []);
+  const getDiscout =async()=>{
+    const responseDiscount = await fetch("http://157.230.2.35/api/subcategory");
+    const data3 = await responseDiscount.json();
+    setDiscountProduct(data3?.data)
+  }
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
     const hendlepic = async () => {
-
+     
       const data = {
-        name: title.current.value,
-        catalogId: +catalogId.current.value,
-       
-      }
+        category_id : +productId.current.value,
+        catalog_id: +percent.current.value,
+        subcategory_name: end_time.current.value,
+      };
+      console.log(data ,'data');
+      
       try {
-        fetch("http://localhost:1212/api/subcategories", {
+        fetch("http://157.230.2.35/api/subcategory", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -52,7 +82,7 @@ export default function Products(): JSX.Element {
             if (data.errors) {
               console.log(data.errors);
             } else {
-              console.log(data);
+              getDiscout()
             }
           });
       } catch (error) {
@@ -62,82 +92,276 @@ export default function Products(): JSX.Element {
     hendlepic();
   };
 
+
+  const EditSubmit = (e: any) => {
+    e.preventDefault();
+
+    const hendlepic = async () => {
+      const data = {
+        category_id : +productIdEdit.current.value,
+        catalog_id: +percentEdit.current.value,
+        subcategory_name: end_timeEdit.current.value,
+      };
+console.log(end_timeEdit?.current.value ,"dataaaaaaaaaaaaaaaaaaaaaaaa");
+
+      try {
+        fetch(`http://157.230.2.35/api/subcategory/${id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.errors) {
+              console.log(data.errors ,"error");
+            } else {
+              console.log(data ,"data");
+          getDiscout()
+            }
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    hendlepic();
+  };
+  const renderTitle = (title: string) => {
+    if (title.length > 30) {
+      return title.substring(0, 30) + "...";
+    }
+    return title;
+  };
+
+
+
+
+   //Delete
+
+   const handleDeleteProduct = (index: number) => {
+    fetch(`http://157.230.2.35/api/subcategory/${index}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then(async (data) => {
+        if (data.errors) {
+          console.log(data.errors);
+        } else {
+          console.log(data);
+          getDiscout()
+        }
+      });
+    console.log(index);
+  };
+
+  //Modal
+
+  const handleModal = () => {
+    setModal("hidden");
+//     productIdEdit.current.value =""
+// percentEdit.current.value =""
+// end_timeEdit.current.value =""
+  };
+
+  const hendlEdit = () => {
+    setModal("block");
+  };
+
   return (
     <>
       <div className="container">
         <div>
-          <h1 className="header fount p-5">Subcategory</h1>
+          <h1 className="header fount p-5">Discount</h1>
         </div>
         <div className="body_Wrapper">
           <form className="pl-8 mb-20 p-8" onSubmit={handleSubmit}>
-            <h2 className="form_title fount mb-8">Add new subcategory</h2>
-            <ol className="flex items-center justify-between mb-8">
+            <h2 className="form_title fount mb-8">Add new discount</h2>
+            <ol className="flex items-center flex-wrap justify-between mb-8">
               <li>
-                <label className="block fount">SubcategoryName</label>
-                <input
-                  ref={title}
-                  type="text"
-                  className="w-80 p-3 rounded-lg focus:outline-none focus:ring"
-                  placeholder="SubcategoryName"
-                />
-              </li>
-              <li>
-                <label className="block fount">Catalog</label>
+                <label className="block fount">Category name</label>
                 <select
-                  ref={catalogId}
+                  ref={productId}
                   className="hidden_pleceholder w-80 p-3 rounded-lg focus:outline-none focus:ring"
                 >
                   <option value="" disabled hidden>
-                    Catalog
+                  Category
                   </option>
-                  {catalog.map((el: any) => (
-                    <option value={el.id}>{el.catalogName}</option>
+                  {product?.map((el: any) => (
+                    <option value={el?.id}>{el?.category_name}</option>
                   ))}
                 </select>
               </li>
-              <div className="mt-auto">
-                <button
-                  className="submit h-12 bg_fount text-center rounded-lg"
-                  type="submit"
+
+              <li>
+                <label className="block fount">Catalog name</label>
+                <select
+                  ref={percent}
+                  className="hidden_pleceholder w-80 p-3 rounded-lg focus:outline-none focus:ring"
                 >
-                  Qo’shish
-                </button>
-              </div>
-             
-            </ol>
-          
+                  <option value="" disabled hidden>
+                  Category
+                  </option>
+                  {catalog?.map((el: any) => (
+                    <option value={el?.id}>{el?.catalog_name}</option>
+                  ))}
+                </select>
+              </li>
               
-           
+              <li>
+                <label className="block fount">Subcategory name</label>
+                <input
+                  ref={end_time}
+                  type="text"
+                  className="w-80 p-3 rounded-lg focus:outline-none focus:ring"
+                  placeholder="Subcategory name"
+                />
+              </li>
+
+            </ol>
+
+            <div className="ml-auto">
+              <button
+                className="submit h-12 bg_fount text-center rounded-lg"
+                type="submit"
+              >
+                Qo’shish
+              </button>
+            </div>
           </form>
           <div className="p-8">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="form_title pl-8">Bizning o’quvchilar</h2>
-              <div className="search pl-4 w-80 rounded-lg">
-                <Image
-                  className="inline"
-                  src={search}
-                  alt=""
-                  width={18}
-                  height={18}
-                />
-                <input
-                  className="inline border-none pt-2 pb-2 w-64"
-                  type="input"
-                  placeholder="Search"
-                />
-              </div>
+            <div className=" mb-8">
+              <h2 className="form_title pl-8 fount " >Bizning subcategoriyalarimiz</h2>
+              
             </div>
-            <ol className="m-0 p-0">
-              <li className="sidebar flex items-center justify-between p-4">
-                <p className="sidebar_text">№</p>
-                <p className="sidebar_text1">O’quvchi ismi</p>
-                <p className="sidebar_text">Telefon nomer</p>
-                <p className="sidebar_text">Yo’nalish</p>
-                <p className="sidebar_text">Ota-ona(F.I.SH)</p>
-                <p className="sidebar_text">Ota-ona (Tel)</p>
-              </li>
+          
+
+                {/* product */}
+                <ol className="m-0 p-0  flex flex-wrap gap-5 ">
+              {discountProduct?.map((el: any) => (
+                <li className="list_item  max-w-[250px] min-w-[250px] border mt-8 rounded-xl bg-white drop-shadow-lg ">
+              
+
+                  <div className=" p-3">
+                    <h4 className="text-sm max-w-[200px] font-bold pl-1 ">
+                    subcategory_name:  {renderTitle(el?.subcategory_name)}
+                    </h4>
+                    <p className="text-sm font-bold pl-1 mt-2 ">
+                      productlar soni: {el?.products?.length}  <br />
+                    </p>
+                    <p className="text-sm font-bold pl-1 mt-2 mb-8">
+                      brandlar soni: {el?.brands?.length}  <br />
+                    </p>
+                   
+                    
+
+                    <div className="flex items-center ml-auto">
+                      <button
+                        onClick={() => {
+                          hendlEdit();
+                          setId(el?.id)
+                        }}
+                        className=" flex bg_fount text-white rounded-lg   border-2 p-2 mr-2"
+                      >
+                        <BiSolidEditAlt
+                          color="yellow"
+                          style={{ width: "24px", height: "24px" }}
+                        />
+                        Edit
+                      </button>
+
+                      <button
+                        onClick={() => handleDeleteProduct(el?.id)}
+                        className="flex bg_fount text-white rounded-lg  bg-red border-2 p-2"
+                      >
+                        <MdDeleteSweep
+                          style={{
+                            color: "red",
+                            width: "24px",
+                            height: "24px",
+                          }}
+                        />
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              ))}
             </ol>
           </div>
+        </div>
+          {/* Modal */}
+          <div className={`border-black madal ${modal}`}>
+          <button
+            onClick={() => handleModal()}
+            className="madal_button ml-auto block border-5 border-blue"
+            type="button"
+          >
+            x
+          </button>
+
+        
+          
+            
+            <form className="pl-8 mb-20 p-8" onSubmit={EditSubmit}>
+            <h2 className="form_title fount mb-8">Edir  discount</h2>
+            <ol className="flex items-center flex-wrap justify-between mb-8">
+            <li>
+                <label className="block fount">Category name</label>
+                <select
+                  ref={productIdEdit}
+                  className="hidden_pleceholder w-80 p-3 rounded-lg focus:outline-none focus:ring"
+                >
+                  <option value="" disabled hidden>
+                  Category
+                  </option>
+                  {product?.map((el: any) => (
+                    <option value={el?.id}>{el?.category_name}</option>
+                  ))}
+                </select>
+              </li>
+
+              <li>
+                <label className="block fount">Catalog name</label>
+                <select
+                  ref={percentEdit}
+                  className="hidden_pleceholder w-80 p-3 rounded-lg focus:outline-none focus:ring"
+                >
+                  <option value="" disabled hidden>
+                  Category
+                  </option>
+                  {catalog?.map((el: any) => (
+                    <option value={el?.id}>{el?.catalog_name}</option>
+                  ))}
+                </select>
+              </li>
+              
+              <li>
+                <label className="block fount">Subcategory name</label>
+                <input
+                  ref={end_timeEdit}
+                  type="text"
+                  className="w-80 p-3 rounded-lg focus:outline-none focus:ring"
+                  placeholder="Subcategory name"
+                />
+              </li>
+            </ol>
+              <div className="ml-auto  ">
+              <button
+              onClick={() => handleModal()}
+                className="submit mx-auto h-12 bg_fount text-center rounded-lg"
+                type="submit"
+              >
+                Qo’shish
+              </button>
+            </div>
+
+            
+          </form>
+           
         </div>
       </div>
     </>

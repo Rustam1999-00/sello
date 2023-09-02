@@ -21,10 +21,10 @@ export default function Products(): JSX.Element {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response2 = await fetch("http://localhost:1212/api/catalogs");
+        const response2 = await fetch("http://157.230.2.35/api/catalogs");
         const data2 = await response2.json();
         setCatalog(data2);
-        const response4 = await fetch( "http://localhost:1212/api/subcategories");
+        const response4 = await fetch( "http://157.230.2.35/api/subcategories");
         const data4 = await response4.json();
         setSubcategori(data4);
 
@@ -47,7 +47,7 @@ export default function Products(): JSX.Element {
         subcategoryId: +subcategoryId.current.value,
       }
       try {
-        fetch("http://localhost:1212/api/categories", {
+        fetch("http://157.230.2.35/api/categories", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

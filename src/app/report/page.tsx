@@ -14,17 +14,17 @@ export default function Reports(): JSX.Element {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response1 = await fetch("http://localhost:1212/api/products");
+        const response1 = await fetch("http://157.230.2.35/api/products");
         const data1 = await response1.json();
         setProduct(data1);
-        const response2 = await fetch("http://localhost:1212/api/sellohome");
+        const response2 = await fetch("http://157.230.2.35/api/sellohome");
         const data2 = await response2.json();
         setSello(data2);
-        const response3 = await fetch('http://localhost:1212/api/auth/users');
+        const response3 = await fetch('http://157.230.2.35/api/auth/users');
         const data3 = await response3.json();
         setUser(data3);
 
-        const response4 = await fetch('http://localhost:1212/api/brand');
+        const response4 = await fetch('http://157.230.2.35/api/brand');
         const data4 = await response4.json();
         setBrend(data4);
       } catch (error) {

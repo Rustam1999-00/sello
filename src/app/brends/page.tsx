@@ -24,12 +24,12 @@ export default function Products(): JSX.Element {
     const fetchData = async () => {
       try {
    
-        const response2 = await fetch("http://localhost:1212/api/catalogs");
+        const response2 = await fetch("http://157.230.2.35/api/catalogs");
         const data2 = await response2.json();
         setCatalog(data2);
  
 
-        const response4 = await fetch( "http://localhost:1212/api/subcategories");
+        const response4 = await fetch( "http://157.230.2.35/api/subcategories");
         const data4 = await response4.json();
         setSubcategori(data4);
 
@@ -50,7 +50,7 @@ export default function Products(): JSX.Element {
       try {
         const formData = new FormData();
         formData.append("file", files.current?.files[0]);
-        const response = await axios.post("http://localhost:1212/api/file", formData);
+        const response = await axios.post("http://157.230.2.35/api/file", formData);
         const data = response.data;
         const datas = {
           image: data.name,
@@ -60,7 +60,7 @@ export default function Products(): JSX.Element {
         };
         console.log(datas);
 
-         fetch("http://localhost:1212/api/brand", {
+         fetch("http://157.230.2.35/api/brand", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
