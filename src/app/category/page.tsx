@@ -17,33 +17,16 @@ export default function Products(): JSX.Element {
   const title1 = useRef<any>(null);
 
   const catalogId = useRef<any>(null);
-  const subcategoryId = useRef<any>(null);
+  const catalogId1 = useRef<any>(null);
 
   const title = useRef<any>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-
-        const response2 = await fetch("http://10.10.1.25:3001/api/category");
+        const response2 = await fetch("http://157.230.2.35/api/category");
         const data2 = await response2.json();
         setCategory(data2.data);
-<<<<<<< HEAD
-
-      
-        // const response4 = await fetch( "http://157.230.2.35/api/subcategories");
-        // const data4 = await response4.json();
-        // setSubcategory(data4);
-
-=======
-
-      
-        const response4 = await fetch( "http://157.230.2.35/api/subcategories");
-        const data4 = await response4.json();
-        setSubcategori(data4);
-
->>>>>>> b661d32f0d88c104abb2df53a50f42509205663f
-
       } catch (error) {
         console.error(error);
       }
@@ -55,7 +38,7 @@ export default function Products(): JSX.Element {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responsee = await fetch("http://10.10.1.25:3001/api/catalog");
+        const responsee = await fetch("http://157.230.2.35/api/catalog");
         const dataa = await responsee.json();
         setCatalog(dataa.data);
       } catch (error) {
@@ -74,11 +57,11 @@ export default function Products(): JSX.Element {
         catalog_id: +catalogId.current.value,
       };
 
+      console.log(data);
+      console.log(catalogId.current.value);
+
       try {
-
-        fetch("http://10.10.1.25:3001/api/category", {
-
-      
+        fetch("http://157.230.2.35/api/category", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -86,12 +69,15 @@ export default function Products(): JSX.Element {
           body: JSON.stringify(data),
         })
           .then((res) => res.json())
-          .then((data) => {
+          .then(async (data) => {
             if (data.errors) {
               console.log(data.errors);
             } else {
               console.log(data);
             }
+            const response2 = await fetch("http://157.230.2.35/api/category");
+            const data2 = await response2.json();
+            setCategory(data2.data);
           });
       } catch (error) {
         console.log(error);
@@ -111,18 +97,15 @@ export default function Products(): JSX.Element {
   const handleDeleteCategory = (id: any) => {
     const handleDelete = async () => {
       try {
-        const response = await fetch(
-          `http://10.10.1.25:3001/api/category/${id}`,
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(`http://157.230.2.35/api/category/${id}`, {
+          method: "DELETE",
+        });
         const responseData = await response.json();
         if (responseData.errors) {
           console.log(responseData.errors);
         } else {
           console.log(responseData);
-          const response = await fetch("http://10.10.1.25:3001/api/category");
+          const response = await fetch("http://157.230.2.35/api/category");
           const data = await response.json();
           setCategory(data.data);
         }
@@ -137,27 +120,24 @@ export default function Products(): JSX.Element {
 
     const data = {
       category_name: title1.current.value,
-      catalog_id:+catalogId.current.value
+      catalog_id: +catalogId1.current.value,
     };
 
     try {
-      const response = await fetch(
-        `http://10.10.1.25:3001/api/category/${Id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(`http://157.230.2.35/api/category/${Id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
       const responseData = await response.json();
       if (responseData.errors) {
         console.log(responseData.errors);
       } else {
         console.log(responseData);
-        alert(responseData.message)
-        const response = await fetch("http://10.10.1.25:3001/api/category");
+        alert(responseData.message);
+        const response = await fetch("http://157.230.2.35/api/category");
         const data = await response.json();
         setCategory(data.data);
       }
@@ -276,7 +256,7 @@ export default function Products(): JSX.Element {
               <ol className="flex items-center justify-between mb-4">
                 <li className="flex items-center gap-9 justify-between">
                   <select
-                    ref={catalogId}
+                    ref={catalogId1}
                     className="hidden_pleceholder w-80 p-3 rounded-lg focus:outline-none focus:ring"
                   >
                     <option>Catalog</option>
