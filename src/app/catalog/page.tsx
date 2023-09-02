@@ -13,6 +13,7 @@ export default function Products(): JSX.Element {
   const catalogId = useRef<any>(null);
   const title1 = useRef<any>(null);
 
+
   const fetchCatalogs = async () => {
     try {
       const response = await fetch("http://10.10.1.25:3001/api/catalog");
@@ -24,6 +25,7 @@ export default function Products(): JSX.Element {
   };
   fetchCatalogs();
 
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
@@ -34,7 +36,9 @@ export default function Products(): JSX.Element {
         catalog_name: title.current.value,
       };
       try {
+
         const response = await fetch("http://10.10.1.25:3001/api/catalog", {
+
           method: "POST",
           headers: {
             "Content-Type": "application/json",

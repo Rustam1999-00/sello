@@ -23,6 +23,9 @@ export default function Products(): JSX.Element {
   const [product, setProduct] = useState([]);
   const [productId, setProductId] = useState([]);
   const [modal, setModal] = useState("hidden");
+  const [info, setInfo] = useState("hidden");
+  const [Id, setId] = useState(0);
+  const [productInfoDada, setProductInfoDada] = useState({});
 
   const renderTitle = (title: string) => {
     if (title.length > 30) {
@@ -33,7 +36,6 @@ export default function Products(): JSX.Element {
 
   const files = useRef<any>(null);
   const title = useRef<any>(null);
-  const title1 = useRef<any>(null);
   const amount = useRef<any>(null);
   const price = useRef<any>(null);
   const productInfo = useRef<any>(null);
@@ -42,6 +44,17 @@ export default function Products(): JSX.Element {
   const categoriesId = useRef<any>(null);
   const description = useRef<any>(null);
   const subcategoryId = useRef<any>(null);
+
+  const files1 = useRef<any>(null);
+  const title1 = useRef<any>(null);
+  const amount1 = useRef<any>(null);
+  const price1 = useRef<any>(null);
+  const productInfo1 = useRef<any>(null);
+  const brendId1 = useRef<any>(1);
+  const catalogId1 = useRef<any>(null);
+  const categoriesId1 = useRef<any>(null);
+  const description1 = useRef<any>(null);
+  const subcategoryId1 = useRef<any>(null);
 
   //Get
   useEffect(() => {
@@ -67,6 +80,7 @@ export default function Products(): JSX.Element {
 
     fetchData();
   }, []);
+  //pdoduct Get
   useEffect(() => {
     const myfuns = async () => {
       const response5 = await fetch("http://157.230.2.35/api/product");
@@ -75,74 +89,68 @@ export default function Products(): JSX.Element {
     };
     myfuns();
   }, []);
-  // useEffect(() => {
-  //   const myfuns = async () => {
 
-  //   };
-  //   myfuns();
-  // }, []);
-
-  console.log(brend);
 
   //Post
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    console.log(files.current.files[0]);
-    console.log(title.current);
 
-    console.log("salom");
 
-    //     const hendlepic = async () => {
-    //       const formData = new FormData();
-    //       formData.append("file", files.current?.files[0]);
-    //       try {
-    //         const response = await axios.post(
-    //           "http://157.230.2.35/api/file",
-    //           formData
-    //         );
-    //         const data = response.data;
-    // console.log(data.error);
+    const hendlepic = async () => {
+      const formData = new FormData();
+      formData.append("file", files.current?.files[0]);
+      try {
+        const response = await axios.post(
+          "http://157.230.2.35/api/file",
+          formData
+        );
+        const data = response.data;
 
-    //         // const productInfos = productInfo.current.value;
-    //         const datas = {
-    //           product_image: data,
-    //           title: title.current.value,
-    //           product_count: +amount.current.value,
-    //           price: +price.current.value,
-    //           product_info:productInfo.current.value,
-    //           brand_id: +brendId.current.value,
-    //           catalog_id: +catalogId.current.value,
-    //           category_id: +categoriesId.current.value,
-    //           description: description.current.value,
-    //           subcategory_id: +subcategoryId.current.value,
-    //         };
+        // const productInfos = productInfo.current.value;  
+        const datas = {
+          product_image: data.name,
+          title: title.current.value,
+          product_count: +amount.current.value,
+          price: +price.current.value,
+          product_info:productInfoDada,
+          brand_id: +brendId.current.value,
+          catalog_id: +catalogId.current.value,
+          category_id: +categoriesId.current.value,
+          description: description.current.value,
+          subcategory_id: +subcategoryId.current.value,
+        };
 
-    //         console.log(datas);
+        console.log(datas);
 
-    //         fetch("http://157.230.2.35/api/product", {
-    //           method: "POST",
-    //           headers: {
-    //             "Content-Type": "application/json",
-    //           },
-    //           body: JSON.stringify(datas),
-    //         })
-    //           .then((res) => res.json())
-    //           .then((data) => {
-    //             if (data.errors) {
-    //               console.log(data.errors);
-    //             } else {
-    //               console.log(data);
-    //             }
+        fetch("http://157.230.2.35/api/product", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(datas),
+        })
+          .then((res) => res.json())
+          .then(async (data) => {
+            if (data.errors) {
+              console.log(data.errors);
+            } else {
+              console.log(data);
+            }
+            const response5 = await fetch("http://157.230.2.35/api/product");
+            const data5 = await response5.json();
+            setProduct(data5);
+            alert(data.message)
 
-    //             setProduct(data);
-    //           });
-    //       } catch (error) {
-    //         console.error(error);
-    //       }
-    //     };
 
-    // hendlepic();
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    hendlepic();
+
   };
 
   //Delete
@@ -162,9 +170,11 @@ export default function Products(): JSX.Element {
           const response5 = await fetch("http://157.230.2.35/api/product");
           const data5 = await response5.json();
           setProduct(data5);
+         alert(data.message)
+
+
         }
       });
-    console.log(index);
   };
 
   //Modal
@@ -173,11 +183,109 @@ export default function Products(): JSX.Element {
     setModal("hidden");
   };
 
-  const hendlEdit = () => {
+  const hendlEdit = (el: number) => {
     setModal("block");
+    setId(el);
+  };
+  //Info Madal
+  const handleModalInfo = () => {
+    setInfo("hidden");
+  };
+  const handleModalInfoOpen = () => {
+    setInfo("block");
   };
 
-  console.log(product);
+  //Edit
+  const handleEdit = async (e: any) => {
+    e.preventDefault();
+
+    const hendlepic = async () => {
+      const formData = new FormData();
+      formData.append("file", files1.current?.files[0]);
+      try {
+        const response = await axios.post(
+          "http://157.230.2.35/api/file",
+          formData
+        );
+        const data = response.data;
+
+        const datas = {
+          product_image: data.name,
+          title: title1.current.value,
+          product_count: +amount1.current.value,
+          price: +price1.current.value,
+          product_info: productInfoDada,
+          brand_id: +brendId1.current.value,
+          catalog_id: +catalogId1.current.value,
+          category_id: +categoriesId1.current.value,
+          description: description1.current.value,
+          subcategory_id: +subcategoryId1.current.value,
+        };
+
+        console.log(datas);
+
+        fetch(`http://157.230.2.35/api/product/${Id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(datas),
+        })
+          .then((res) => res.json())
+          .then(async (data) => {
+            if (data.errors) {
+              console.log(data.errors);
+            } else {
+              console.log(data);
+              alert(data.message)
+
+            }
+            const response5 = await fetch("http://157.230.2.35/api/product");
+            const data5 = await response5.json();
+            setProduct(data5);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    hendlepic();
+  };
+
+  //ProductInfo
+
+  const [inputs, setInputs] = useState([{ key: "", value: "" }]);
+
+  const handleAddInput = () => {
+    const newInputs = [...inputs, { key: "", value: "" }];
+    setInputs(newInputs);
+  };
+
+  const handleInputChange = (index: any, event: any) => {
+    const { name, value } = event.target;
+    const newInputs: any = [...inputs];
+    newInputs[index][name] = value;
+    setInputs(newInputs);
+  };
+
+  const handleDeleteInput = (index: any) => {
+    const newInputs = [...inputs];
+    newInputs.splice(index, 1);
+    setInputs(newInputs);
+  };
+
+  const handleInfoSubmit = (e: any) => {
+    e.preventDefault();
+    const data = Object.fromEntries(
+      inputs
+        .filter((input) => input.key && input.value)
+        .map((input) => [input.key, input.value])
+    );
+    setProductInfoDada(data)
+    alert("Success")
+
+    console.log(data);
+  };
 
   return (
     <>
@@ -199,7 +307,7 @@ export default function Products(): JSX.Element {
                 />
               </li>
               <li>
-                <label className="block">Picture </label>
+                <label className="block fount">Picture </label>
                 <input
                   ref={files}
                   // onChange={handleFileChange}
@@ -214,7 +322,7 @@ export default function Products(): JSX.Element {
               </li>
 
               <li>
-                <label className="block">Price</label>
+                <label className="block fount">Price</label>
                 <input
                   ref={price}
                   type="number"
@@ -225,7 +333,7 @@ export default function Products(): JSX.Element {
             </ol>
             <ol className="flex items-center justify-between mb-8">
               <li>
-                <label className="block">Amount</label>
+                <label className="block fount">Amount</label>
                 <input
                   ref={amount}
                   type="number"
@@ -234,18 +342,21 @@ export default function Products(): JSX.Element {
                 />
               </li>
               <li>
-                <label className="block">ProductInfo</label>
+                <label className="block fount">ProductInfo</label>
 
-                <input
-                  ref={productInfo}
-                  onClick={() => {}}
-                  className="w-80 p-3 rounded-lg focus:outline-none focus:ring"
-                  placeholder="Mahsulot malumotlari"
-                />
+                <button
+                  onClick={() => {
+                    handleModalInfoOpen();
+                  }}
+                  className="w-80 p-3 border-2 text-blue-600 text-left  rounded-lg focus:outline-none focus:ring bg-white"
+                 
+                  type="button"
+                > ProductInfo </button>
+               
               </li>
 
               <li>
-                <label className="block">Brend</label>
+                <label className="block fount">Brend</label>
                 <select
                   ref={brendId}
                   typeof="number"
@@ -261,13 +372,13 @@ export default function Products(): JSX.Element {
             </ol>
             <ol className="flex items-center justify-between mb-8">
               <li>
-                <label className="block">Catalog</label>
+                <label className="block fount">Catalog</label>
                 <select
                   ref={catalogId}
                   className="hidden_pleceholder w-80 p-3 rounded-lg focus:outline-none focus:ring"
                 >
                   <option value="" disabled hidden>
-                    Ona-tili
+                  
                   </option>
                   {catalog.map((el: any) => (
                     <option value={el.id}>{el.catalog_name}</option>
@@ -275,13 +386,13 @@ export default function Products(): JSX.Element {
                 </select>
               </li>
               <li>
-                <label className="block">Categori</label>
+                <label className="block fount">Categori</label>
                 <select
                   ref={categoriesId}
                   className="hidden_pleceholder w-80 p-3 rounded-lg focus:outline-none focus:ring"
                 >
                   <option value="" disabled hidden>
-                    Ona-tili
+                   
                   </option>
                   {categori.map((el: any) => (
                     <option value={el.id}>{el.category_name}</option>
@@ -289,7 +400,7 @@ export default function Products(): JSX.Element {
                 </select>
               </li>
               <li>
-                <label className="block">Subcategory</label>
+                <label className="block fount">Subcategory</label>
 
                 <select
                   ref={subcategoryId}
@@ -304,22 +415,23 @@ export default function Products(): JSX.Element {
             </ol>
             <div className="flex items-end">
               <div className="">
-                <label className="block">Description</label>
+                <label className="block fount">Description</label>
                 <textarea
                   ref={description}
-                  value="Matn qiymati"
+                  
                   className="hidden_pleceholder w-80 p-3 rounded-lg focus:outline-none focus:ring"
                   id="story"
                   name="story"
                   rows={3}
                   cols={33}
+                  placeholder=" description"
                 />
               </div>
               <button
-                className="submit h-12 bg_fount text-center rounded-lg"
+                className="submit h-12 bg_fount text-center rounded-lg active:bg-sky-700"
                 type="submit"
               >
-                Qo’shish
+                Submit
               </button>
             </div>
           </form>
@@ -354,7 +466,7 @@ export default function Products(): JSX.Element {
                     <div className="flex items-center ml-auto">
                       <button
                         onClick={() => {
-                          hendlEdit();
+                          hendlEdit(el.id);
                         }}
                         className=" flex bg_fount text-white rounded-lg   border-2 p-2 mr-2"
                       >
@@ -396,7 +508,7 @@ export default function Products(): JSX.Element {
             x
           </button>
 
-          <form className="pl-8 mb-4 p-2" onSubmit={handleSubmit}>
+          <form className="pl-8 mb-4 p-2" onSubmit={handleEdit}>
             <h2 className="form_title fount mb-4">Edit products</h2>
             <ol className="flex items-center justify-between mb-4">
               <li>
@@ -411,8 +523,7 @@ export default function Products(): JSX.Element {
               <li>
                 <label className="block fount mb-1">Picture </label>
                 <input
-                  ref={files}
-                  // onChange={handleFileChange}
+                  ref={files1}
                   className="w-64 p-3 rounded-lg focus:outline-none focus:ring file:mr-4 file:py-0 file:px-2
       file:rounded-full file:border-0
       file:text-sm file:font-semibold
@@ -426,7 +537,7 @@ export default function Products(): JSX.Element {
               <li>
                 <label className="block fount mb-1">Price</label>
                 <input
-                  ref={price}
+                  ref={price1}
                   type="number"
                   className="w-64 p-3 rounded-lg focus:outline-none focus:ring"
                   placeholder="Price"
@@ -437,7 +548,7 @@ export default function Products(): JSX.Element {
               <li>
                 <label className="block fount mb-1">Amount</label>
                 <input
-                  ref={amount}
+                  ref={amount1}
                   type="number"
                   className="w-50 p-3 rounded-lg focus:outline-none focus:ring"
                   placeholder="Amount"
@@ -445,19 +556,20 @@ export default function Products(): JSX.Element {
               </li>
               <li>
                 <label className="block fount mb-1">ProductInfo</label>
-
-                <input
-                  ref={productInfo}
-                  onClick={() => {}}
-                  className="w-62 p-3 rounded-lg focus:outline-none focus:ring"
-                  placeholder="ProductInfo"
-                />
+                <button
+                  onClick={() => {
+                    handleModalInfoOpen();
+                  }}
+                  className="w-64 p-3 border-2 text-blue-600 text-left  rounded-lg focus:outline-none focus:ring bg-white"
+                 
+                  type="button"
+                > ProductInfo </button>
               </li>
 
               <li>
                 <label className="block fount">Brend</label>
                 <select
-                  ref={brendId}
+                  ref={brendId1}
                   typeof="number"
                   className="hidden_pleceholder w-64 p-3 rounded-lg focus:outline-none focus:ring"
                 >
@@ -473,11 +585,11 @@ export default function Products(): JSX.Element {
               <li>
                 <label className="block fount mb-1">Catalog</label>
                 <select
-                  ref={catalogId}
+                  ref={catalogId1}
                   className="hidden_pleceholder w-64 p-3 rounded-lg focus:outline-none focus:ring"
                 >
                   <option value="" disabled hidden>
-                    Ona-tili
+                 
                   </option>
                   {catalog.map((el: any) => (
                     <option value={el.id}>{el.catalog_name}</option>
@@ -487,11 +599,11 @@ export default function Products(): JSX.Element {
               <li>
                 <label className="block fount mb-1">Categori</label>
                 <select
-                  ref={categoriesId}
+                  ref={categoriesId1}
                   className="hidden_pleceholder w-64 p-3 rounded-lg focus:outline-none focus:ring"
                 >
                   <option value="" disabled hidden>
-                    Ona-tili
+                 
                   </option>
                   {categori.map((el: any) => (
                     <option value={el.id}>{el.category_name}</option>
@@ -502,7 +614,7 @@ export default function Products(): JSX.Element {
                 <label className="block fount mb-1">Subcategory</label>
 
                 <select
-                  ref={subcategoryId}
+                  ref={subcategoryId1}
                   className="hidden_pleceholder w-64 p-3 rounded-lg focus:outline-none focus:ring"
                 >
                   <option value="" disabled hidden></option>
@@ -516,7 +628,7 @@ export default function Products(): JSX.Element {
               <div className="">
                 <label className="block fount mb-1">Description</label>
                 <textarea
-                  ref={description}
+                  ref={description1}
                   className="hidden_pleceholder w-62 p-3 rounded-lg focus:outline-none focus:ring"
                   id="story"
                   name="story"
@@ -526,14 +638,65 @@ export default function Products(): JSX.Element {
                 />
               </div>
               <button
-                className="submit h-12 bg_fount text-center rounded-lg"
+                className="submit h-12 bg_fount text-center rounded-lg active:bg-sky-700"
                 type="submit"
               >
-                Qo’shish
+                Submit
               </button>
             </div>
           </form>
         </div>
+        {/* productInfo */}
+        <div className={`border-black madal ${info}`}>
+          <button
+            onClick={() => handleModalInfo()}
+            className="madal_button ml-auto block border-5 border-blue"
+            type="button"
+          >
+            x
+          </button>
+          <form onSubmit={handleInfoSubmit} className="max-w-md mx-auto mt-4">
+            {inputs.map((input, index) => (
+              <div key={index} className="mb-4 flex">
+                <input
+                  type="text"
+                  name="key"
+                  value={input.key}
+                  onChange={(event) => handleInputChange(index, event)}
+                  className="border rounded px-2 py-1 mr-2 focus:outline-none focus:ring focus:ring-red-400"
+                />
+                <input
+                  type="text"
+                  name="value"
+                  value={input.value}
+                  onChange={(event) => handleInputChange(index, event)}
+                  className="border rounded px-2 py-1 mr-2  focus:outline-none focus:ring focus:ring-blue-400"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleDeleteInput(index)}
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2"
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={handleAddInput}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+            >
+              Add Input
+            </button>
+            <button
+              type="submit"
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded active:bg-sky-700"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+        {/* =============================== */}
       </div>
     </>
   );
