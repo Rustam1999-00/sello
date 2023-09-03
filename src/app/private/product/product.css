@@ -42,7 +42,8 @@ input {
     padding: 13px;
     display: block;
     margin-left: auto;
-    color: #fff;
+    /* color: #b80d0d; */
+    background: #2eb4ae;
 }
 
 .search {

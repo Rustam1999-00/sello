@@ -1,34 +1,35 @@
 "use client";
 import Image from "next/image";
-import loginimage from '../../public/images/login.jpg'
-import { useRouter } from 'next/navigation';
-import { useState,useRef } from 'react';
-
-
+import loginimage from "../../../../public/images/login.jpg";
+import { useRouter } from "next/navigation";
+import { useState, useRef } from "react";
 
 
 export default function Login() {
+
+ 
+
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const hendleSubmit = (e:any) => {
-      e.preventDefault()
-    // Kirishni tekshirish logikasini yozingy
-const emailDB = 'admin@gmail.com';
-const passwordDB = 'admin'
+ 
 
+  const hendleSubmit = (e: any) => {
+    e.preventDefault();
+    // Kirishni tekshirish logikasini yozing
+    const emailDB = "admin@gmail.com";
+    const passwordDB = "admin";
 
     if (email === emailDB && password === passwordDB) {
-      localStorage.setItem('password', password);
-      localStorage.setItem('email', email);
-      router.push('/private/report'); 
+      localStorage.setItem("password", password);
+      localStorage.setItem("email", email);
+      router.push("/private/report");
     } else {
-      router.push('/'); 
-      alert("Siz admin emassiz  yoki xato ko'd")
+      router.push("/public/login");
+      alert("Siz admin emassiz  yoki xato ko'de");
     }
   };
-
 
   return (
     <div className="flex flex-col ml-42 mr-auto bg-wihte items-center md:flex-row md:h-screen">
@@ -39,9 +40,7 @@ const passwordDB = 'admin'
         <div className="w-full max-w-md space-y-8">
           <div>
             <h1 className="text-2xl font-bold">Welcome admin!</h1>
-            <p className="mt-2 text-gray-600">
-            Please sign in to  admin page
-            </p>
+            <p className="mt-2 text-gray-600">Please sign in to admin page</p>
           </div>
           <form onSubmit={hendleSubmit} className="mt-8 space-y-6">
             <div>
@@ -88,25 +87,13 @@ const passwordDB = 'admin'
   );
 }
 
-
-
-
-
-
-
-
-
-
-
-
-  
 // const token = localStorage.getItem('username')
 // const password1 = localStorage.getItem('password')
 
 // console.log(token,password1);
 
 //   return (
-//     <div> 
+//     <div>
 //       <h1>Login Page</h1>
 //       <input
 //         type="text"

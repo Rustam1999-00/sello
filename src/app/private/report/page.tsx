@@ -3,9 +3,19 @@ import { useEffect, useState } from "react";
 
 import Image from "next/image";
 import "./report.css";
-import icon from "../../../public/images/icon.png";
+import icon from "../../../../public/images/icon.png";
+import Header from "../header/page";
+import { useRouter } from "next/navigation";
+
 
 export default function Reports(): JSX.Element {
+  const token = localStorage.getItem("password");
+  const token1 = localStorage.getItem("email");
+  
+  const router = useRouter();
+  token && token1 ?'': router.push('/');
+  
+
   const [product, setProduct] = useState([]);
   const [sello, setSello] = useState([0]);
   const [user, setUser] = useState([0]);
@@ -48,7 +58,9 @@ export default function Reports(): JSX.Element {
 
   return (
     <>
-      <div className="container">
+      <div className="flex w-full">
+        <Header/>
+      <div className="container w-full">
         <div>
           <h1 className=" header fount p-5">Xisobot</h1>
           <div className="p-8">
@@ -105,6 +117,7 @@ export default function Reports(): JSX.Element {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

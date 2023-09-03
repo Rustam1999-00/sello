@@ -35,7 +35,6 @@ body {
 
 .fount{
   color:var(--fount-background);
-  /* background-color: #00B3A8; */
 }
 .bg_fount{
   background: var(--fount-background);
