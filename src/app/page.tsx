@@ -51,7 +51,7 @@ const passwordDB = 'admin'
               <input
                 id="email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder="admin@gmail.com"
                 className="w-full px-4 py-3 mt-1 border-gray-300 rounded-md focus:border-indigo-500 focus:ring focus:ring-indigo-200"
                 required
                 onChange={(e) => setEmail(e.target.value)}
@@ -67,7 +67,7 @@ const passwordDB = 'admin'
               <input
                 id="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder="admin"
                 className="w-full px-4 py-3 mt-1 border-gray-300 rounded-md focus:border-indigo-500 focus:ring focus:ring-indigo-200"
                 required
                 onChange={(e) => setPassword(e.target.value)}
